@@ -1,86 +1,105 @@
-import { useNavigate ,Link} from "react-router-dom";
+import { useNavigate, Link } from 'react-router-dom';
+import { useState } from 'react';
+import { CognitoServiceProvider } from '../provider/cognito-service';
 
 export default function Signup() {
-	let navigate = useNavigate();
-	
-	const homePage = () => {
-		let path = `/`;
-		navigate(path);
-	};
-	return (
-		<section className="h-screen">
-			<div className="px-6 h-full text-gray-800">
-				<div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
-					<div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
-						<img
-							src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-							className="w-full"
-							alt="Sample view logo"
-						/>
-					</div>
-					<div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
-						<form>
-							<div className="mb-6">
-								<input
-									required
-									type="text"
-									className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-									id="exampleFormControlInput2"
-									placeholder="Full Name"
-								/>
-							</div>
-							<div className="mb-6">
-								<input
-									required
-									type="Email"
-									className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-									id="exampleFormControlInput2"
-									placeholder="Email address"
-								/>
-							</div>
+  let navigate = useNavigate();
+  const cognitoService = new CognitoServiceProvider();
+  //   states
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
 
-							<div className="mb-6">
-								<input
-									required
-									type="password"
-									className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-									id="exampleFormControlInput2"
-									placeholder="Password"
-								/>
-							</div>
+  const registerUser = (e) => {
+    e.preventDefault();
+    console.log('username', username);
+    cognitoService.signUp(username, email, password).then(
+      (res) => {
+        navigate(`/`);
+      },
+      (err) => {
+        alert(err.message);
+      }
+    );
+  };
 
-							<div className="mb-6">
-								<input
-									required
-									type="password"
-									className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-									id="exampleFormControlInput2"
-									placeholder="Confirm Password"
-								/>
-							</div>
-							<div className="text-center lg:text-left">
-								<Link to='/verification'>
-								<button
-									type="submit"
-									className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-								>
-									Create Account
-								</button>
-								</Link>
-								<p className="text-sm font-semibold mt-2 pt-1 mb-0">
-									Already a user?
-									<Link
-										to='/login'
-										className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
-									>
-										Login
-									</Link>
-								</p>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</section>
-	);
+  return (
+    <section className="h-screen">
+      <div className="px-6 h-full text-gray-800">
+        <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
+          <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
+            <img
+              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+              className="w-full"
+              alt="Sample view logo"
+            />
+          </div>
+          <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+            <form onSubmit={registerUser}>
+              <div className="mb-6">
+                <input
+                  required
+                  type="text"
+                  className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  id="exampleFormControlInput2"
+                  placeholder="Username"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div className="mb-6">
+                <input
+                  required
+                  type="Email"
+                  className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  id="exampleFormControlInput2"
+                  placeholder="Email address"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+
+              <div className="mb-6">
+                <input
+                  required
+                  type="password"
+                  className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  id="exampleFormControlInput2"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+
+              <div className="mb-6">
+                <input
+                  required
+                  type="password"
+                  className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  id="exampleFormControlInput2"
+                  placeholder="Confirm Password"
+                />
+              </div>
+              <div className="text-center lg:text-left">
+                <button
+                  //   onClick={() => registerUser()}
+                  type="submit"
+                  className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                >
+                  Create Account
+                </button>
+                <p className="text-sm font-semibold mt-2 pt-1 mb-0">
+                  Already a user?
+                  <Link
+                    to="/login"
+                    className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
+                  >
+                    {' '}
+                    Login
+                  </Link>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
