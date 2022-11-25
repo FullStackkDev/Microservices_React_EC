@@ -1,12 +1,6 @@
-import { useNavigate ,Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default function Signup() {
-	let navigate = useNavigate();
-	
-	const homePage = () => {
-		let path = `/`;
-		navigate(path);
-	};
 	return (
 		<section className="h-screen">
 			<div className="px-6 h-full text-gray-800">
@@ -59,20 +53,20 @@ export default function Signup() {
 								/>
 							</div>
 							<div className="text-center lg:text-left">
+								<Link to='/verification'>
 								<button
-									onClick={homePage}
 									type="submit"
 									className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
 								>
 									Create Account
 								</button>
+								</Link>
 								<p className="text-sm font-semibold mt-2 pt-1 mb-0">
 									Already a user?
 									<Link
 										to='/login'
 										className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
 									>
-										{" "}
 										Login
 									</Link>
 								</p>
