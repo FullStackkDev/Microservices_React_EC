@@ -2,27 +2,29 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function OTP() {
-    const [theme, setTheme] = useState(null);
+  const [theme, setTheme] = useState(null);
+  const [otpDigits, setOtpDigits] = useState("")
+  console.log("===>",otpDigits)
 
-	useEffect(() => {
-		if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-			setTheme("dark");
-		} else {
-			setTheme("light");
-		}
-	}, []);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  }, []);
 
-	useEffect(() => {
-		if (theme === "dark") {
-			document.documentElement.classList.add("dark");
-		} else {
-			document.documentElement.classList.remove("dark");
-		}
-	}, [theme]);
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
 
-	const handleThemeSwitch = () => {
-		setTheme(theme === "dark" ? "light" : "dark");
-	};
+  const handleThemeSwitch = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
   return (
     <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12 dark:bg-slate-500">
       <div className="relative bg-white px-6 pt-10 pb-9 shadow-xl border border-black dark:border-none mx-auto w-full max-w-lg rounded-2xl">
@@ -40,56 +42,20 @@ export default function OTP() {
             <form>
               <div className="flex flex-col space-y-16">
                 <div className="flex flex-row items-center justify-between mx-auto w-full">
-                  <div className="w-16 h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800  text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <div className="w-16 h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800  text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <div className="w-16 h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800  text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <div className="w-16 h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <div className="w-16 h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <div className="w-16 h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id=""
-                    />
-                  </div>
+                  {[...Array(6)].map((index) => {
+                    return (
+                      <div className="w-16 h-16 ">
+                        <input
+                          className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800  text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700 input autofocus"
+                          type="number"
+                          id="otp"
+                          maxlength="1"
+                          onChange={(event) => setOtpDigits((otpDigits + event.target.value))}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
-                
 
                 <div className="flex flex-col space-y-5">
                   <div>
