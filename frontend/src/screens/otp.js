@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 
 export default function OTP() {
   const [theme, setTheme] = useState(null);
-  const [otpDigits, setOtpDigits] = useState("")
-  console.log("===>",otpDigits)
-
+  const [otpDigits, setOtpDigits] = useState("");
+  
   useEffect(() => {
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       setTheme("dark");
@@ -41,16 +40,19 @@ export default function OTP() {
           <div>
             <form>
               <div className="flex flex-col space-y-16">
-                <div className="flex flex-row items-center justify-between mx-auto w-full">
+                <div id="otp" className="flex flex-row items-center justify-between mx-auto w-full">
                   {[...Array(6)].map((index) => {
                     return (
                       <div className="w-16 h-16 ">
                         <input
-                          className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800  text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700 input autofocus"
-                          type="number"
-                          id="otp"
-                          maxlength="1"
-                          onChange={(event) => setOtpDigits((otpDigits + event.target.value))}
+                          className="w-full h-full focus:first-letter: flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800  text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700 input autofocus"
+                          id={index}
+                          type="tel"
+                          maxLength="1"
+                          inputMode="decimal"
+                          onChange={(event) =>
+                            setOtpDigits(otpDigits + event.target.value)
+                          }
                         />
                       </div>
                     );
