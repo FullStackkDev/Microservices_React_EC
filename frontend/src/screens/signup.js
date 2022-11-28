@@ -1,6 +1,7 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { CognitoServiceProvider } from '../provider/cognito-service';
+import { AppContext } from '../context';
 
 export default function Signup() {
   let navigate = useNavigate();
@@ -9,12 +10,14 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const result = useContext(AppContext);
 
   const registerUser = (e) => {
     e.preventDefault();
     console.log('username', username);
     cognitoService.signUp(username, email, password).then(
       (res) => {
+        result?.setUser(username)
         navigate(`/verification`);
       },
       (err) => {
