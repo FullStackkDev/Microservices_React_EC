@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { CognitoServiceProvider } from '../provider/cognito-service';
+import { AppContext } from '../context';
 import { Link } from "react-router-dom";
 
 export default function OTP() {
+  const cognitoService = new CognitoServiceProvider();
+
   const [theme, setTheme] = useState(null);
   const [otpDigits, setOtpDigits] = useState("")
+  const [userName, setUserName] = useState(null);
+
+  const result = React.useContext(AppContext);
 
   useEffect(() => {
+    setUserName(result?.user)
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       setTheme("dark");
     } else {
@@ -20,6 +28,17 @@ export default function OTP() {
       document.documentElement.classList.remove("dark");
     }
   }, [theme]);
+
+  const verifyUser = () => {
+    cognitoService.confirmUser(otpDigits, userName).then(
+      (res) => {
+        alert('Success! Please Login to your account.');
+      },
+      (err) => {
+        alert(err.message);
+      }
+    )
+  };
 
   const handleThemeSwitch = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -58,8 +77,10 @@ export default function OTP() {
 
                 <div className="flex flex-col space-y-5">
                   <div>
-                    <Link to="/">
-                      <button className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm">
+                    <Link to="/login">
+                      <button
+                      onClick={() => verifyUser()}
+                      className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm">
                         Verify Account
                       </button>
                     </Link>
