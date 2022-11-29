@@ -1,53 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { CognitoServiceProvider } from '../provider/cognito-service';
-import { AppContext } from '../context';
 import { Link } from "react-router-dom";
 
 export default function OTP() {
-  const cognitoService = new CognitoServiceProvider();
-  
   const [theme, setTheme] = useState(null);
-  const [otpDigits, setOtpDigits] = useState("");
-  const [userName, setUserName] = useState(null);
-
-  const result = React.useContext(AppContext);
-
-
-	useEffect(() => {
-		if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-			setTheme("dark");
-		} else {
-			setTheme("light");
-		}
-	}, []);
-
-	useEffect(() => {
-		if (theme === "dark") {
-			document.documentElement.classList.add("dark");
-		} else {
-			document.documentElement.classList.remove("dark");
-		}
-	}, [theme]);
+  const [otpDigits, setOtpDigits] = useState("")
+  console.log("===>",otpDigits)
 
   useEffect(() => {
-    setUserName(result?.user)
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
   }, []);
 
-  const verifyUser = () => {
-    cognitoService.confirmUser(otpDigits, userName).then(
-      (res) => {
-        alert('Success! Please Login to your account.');
-      },
-      (err) => {
-        alert(err.message);
-      }
-    );
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  const handleThemeSwitch = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
   };
-
-
-	const handleThemeSwitch = () => {
-		setTheme(theme === "dark" ? "light" : "dark");
-	};
   return (
     <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12 dark:bg-slate-500">
       <div className="relative bg-white px-6 pt-10 pb-9 shadow-xl border border-black dark:border-none mx-auto w-full max-w-lg rounded-2xl">
@@ -70,9 +47,9 @@ export default function OTP() {
                       <div className="w-16 h-16 ">
                         <input
                           className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800  text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700 input autofocus"
-                          type="number"
+                          type="tel"
                           id="otp"
-                          maxLength="1"
+                          maxlength="1"
                           onChange={(event) => setOtpDigits((otpDigits + event.target.value))}
                         />
                       </div>
@@ -82,10 +59,8 @@ export default function OTP() {
 
                 <div className="flex flex-col space-y-5">
                   <div>
-                    <Link to="/login">
-                      <button 
-                      onClick={() => verifyUser()}
-                      className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm">
+                    <Link to="/">
+                      <button className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm">
                         Verify Account
                       </button>
                     </Link>
