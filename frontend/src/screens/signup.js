@@ -1,6 +1,12 @@
-import {Link} from "react-router-dom";
+import { useNavigate ,Link} from "react-router-dom";
 
 export default function Signup() {
+	let navigate = useNavigate();
+	
+	const homePage = () => {
+		let path = `/`;
+		navigate(path);
+	};
 	return (
 		<section className="h-screen">
 			<div className="px-6 h-full text-gray-800">
