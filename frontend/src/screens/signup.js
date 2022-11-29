@@ -15,17 +15,16 @@ export default function Signup() {
   const [confirmPass, setConfirmPass] = useState("");
   const result = useContext(AppContext);
   //For Toggle State
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   //Handle password show/hide
-  const toggle = () => {
+  const toggleSignUpFields = () => {
     setOpen(!open);
-  };  
+  };
 
   const registerUser = (e) => {
     if (password !== confirmPass)
     return;
     e.preventDefault();
-    console.log("username", username);
     cognitoService.signUp(username, email, password).then(
       (res) => {
         result?.setUser(username);
@@ -72,7 +71,7 @@ export default function Signup() {
                   />
                 </div>
 
-                <div className="mb-6">
+                <div>
                   <input
                     required
                     type={open === false ? "password" : "text"}
@@ -83,9 +82,9 @@ export default function Signup() {
                   />
                   <div className="relative w-fit -right-[355px] -top-9 hover:cursor-pointer">
                       {open === false ? (
-                        <ShowPassword toggle={toggle} />
+                        <ShowPassword toggle={toggleSignUpFields} />
                       ) : (
-                        <HidePassword toggle={toggle} />
+                        <HidePassword toggle={toggleSignUpFields} />
                       )}
                     </div>
                 </div>
@@ -101,9 +100,9 @@ export default function Signup() {
                   />
                   <div className="relative w-fit -right-[355px] -top-9 hover:cursor-pointer">
                       {open === false ? (
-                        <ShowPassword toggle={toggle} />
+                        <ShowPassword toggle={toggleSignUpFields} />
                       ) : (
-                        <HidePassword toggle={toggle} />
+                        <HidePassword toggle={toggleSignUpFields} />
                       )}
                     </div>
                   {(password !== confirmPass) && <p className="text-red-600 pl-3">Passwords do not match</p>}

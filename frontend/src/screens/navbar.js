@@ -40,7 +40,7 @@ export default function Navbar() {
           </Link>
           <div className="flex items-center">
             <div
-              className="hover:cursor-pointer inline-flex mr-10"
+              className="hover:cursor-pointer inline-flex"
               onClick={handleThemeSwitch}
             >
               <svg
@@ -49,7 +49,7 @@ export default function Navbar() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-5 h-5 mr-3 mt-0.5 dark:text-white"
+                className="w-5 h-5 mr-2 dark:text-white"
               >
                 <path
                   strokeLinecap="round"
@@ -58,7 +58,7 @@ export default function Navbar() {
                 />
               </svg>
 
-              <span className="text-3xl sm:text-sm dark:text-white">
+              <span className="text-3xl sm:text-sm dark:text-white mr-2">
                 Dark Mode
               </span>
             </div>

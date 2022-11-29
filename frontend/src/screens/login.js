@@ -9,16 +9,12 @@ import ErrorMessage from "./Components/errorMessage";
 export default function Login() {
   const cognitoService = new CognitoServiceProvider();
 
-  //States
-  //For Login Functionality
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  //For Loading State
   const [isLoading, setIsLoading] = useState(false);
-  //For Toggle State
-  const [open, setOpen] = useState(true);
-  //Error message
+  const [open, setOpen] = useState(false);
   const [error, setError]= useState(null)
+  // const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
   //Handle password show/hide
   const toggle = () => {

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 export default function OTP() {
   const [theme, setTheme] = useState(null);
   const [otpDigits, setOtpDigits] = useState("")
-  console.log("===>",otpDigits)
 
   useEffect(() => {
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -49,7 +48,7 @@ export default function OTP() {
                           className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800  text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700 input autofocus"
                           type="tel"
                           id="otp"
-                          maxlength="1"
+                          maxLength="1"
                           onChange={(event) => setOtpDigits((otpDigits + event.target.value))}
                         />
                       </div>

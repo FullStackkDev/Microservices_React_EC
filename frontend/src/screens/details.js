@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../screens/navbar";
@@ -10,16 +10,15 @@ export default function Details() {
   const [data, setData] = useState([]);
   const url = `https://fakestoreapi.com/products/${params.id}`;
 
-  const fetchData = () => {
-    return axios.get(url).then((response) => {
-      setData(response.data);
-      return response;
-    });
-  };
+  const fetchData = useCallback(async () => {
+    const response = await axios.get(url);
+    setData(response.data);
+    return response;
+  }, [url]);
+
   useEffect(() => {
     fetchData();
-  }, []);
-  console.log(data);
+  }, [fetchData]);
   return (
     <div className="h-screen w-full dark:bg-gray-500 font-nunito">
       <Navbar />
