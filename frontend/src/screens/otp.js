@@ -47,7 +47,7 @@ export default function OTP() {
                       <div className="w-16 h-16 ">
                         <input
                           className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-300 dark:border-gray-800  text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700 input autofocus"
-                          type="number"
+                          type="tel"
                           id="otp"
                           maxlength="1"
                           onChange={(event) => setOtpDigits((otpDigits + event.target.value))}
